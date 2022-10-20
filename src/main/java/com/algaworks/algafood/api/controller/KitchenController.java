@@ -2,7 +2,6 @@ package com.algaworks.algafood.api.controller;
 
 import com.algaworks.algafood.api.model.KitchenXmlWrapper;
 import com.algaworks.algafood.domain.model.Kitchen;
-import com.algaworks.algafood.domain.model.State;
 import com.algaworks.algafood.domain.service.KitchenRegistrationService;
 import com.algaworks.algafood.infrastructure.repository.KitchenRepository;
 import java.util.List;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,9 +38,9 @@ public class KitchenController {
         return new KitchenXmlWrapper(kitchenRepository.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Kitchen> getKitchen(@PathVariable Long id) {
-        Optional<Kitchen> optionalKitchen = kitchenRepository.findById(id);
+    @GetMapping("/{kitchenId}")
+    public ResponseEntity<Kitchen> getKitchen(@PathVariable Long kitchenId) {
+        Optional<Kitchen> optionalKitchen = kitchenRepository.findById(kitchenId);
         if (optionalKitchen.isPresent()) {
             return ResponseEntity.ok(optionalKitchen.get());
         } else {
@@ -53,9 +53,14 @@ public class KitchenController {
         return ResponseEntity.status(HttpStatus.CREATED).body(kitchenService.save(kitchen));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Kitchen> deleteKithen(@PathVariable Long id) {
-        kitchenService.delete(id);
+    @PutMapping("/{kitchenId}")
+    public ResponseEntity<Kitchen> putKitchen(@PathVariable Long kitchenId, @RequestBody Kitchen kitchen) {
+        return ResponseEntity.ok(kitchenService.update(kitchenId, kitchen));
+    }
+
+    @DeleteMapping("/{kitchenId}")
+    public ResponseEntity<Kitchen> deleteKitchen(@PathVariable Long kitchenId) {
+        kitchenService.delete(kitchenId);
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,6 +1,5 @@
 package com.algaworks.algafood.api.model;
 
-import com.algaworks.algafood.domain.model.City;
 import com.algaworks.algafood.domain.model.Restaurant;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
